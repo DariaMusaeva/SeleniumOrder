@@ -1,3 +1,4 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,11 +10,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class WebTesting {
+
     private WebDriver driver;
 
     @BeforeAll
     static void setUpAll() {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Mel\\Desktop\\WebTesting\\driver\\chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
     }
     @BeforeEach
      void setupUp() {
