@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class WebTesting {
@@ -20,7 +22,11 @@ class WebTesting {
     }
     @BeforeEach
      void setupUp() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
     }
 
     @AfterEach
@@ -50,9 +56,8 @@ class WebTesting {
         form.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79000000000");
         form.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         form.findElement(By.className("button")).click();
-        String text = driver.findElement(By.className("input_invalid")).getText().trim();
-        assertEquals("Фамилия и имя"+ "\n"
-                +"Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.", text);
+        String text = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText().trim();
+        assertEquals("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.", text);
         Thread.sleep(10000);
     }
 }
